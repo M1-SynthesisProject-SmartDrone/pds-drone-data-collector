@@ -1,0 +1,32 @@
+==== TEST DE BASE ====
+    On va créer un utilisateur "tester" (mdp : "testmdp"), il va créer une table "test" dans la bd "testdb" (c'est un test au cas-où c'était pas explicite)
+
+        $ sudo -u postgres psql
+
+        postgres=# CREATE DATABASE testdb;
+
+        postgres=# CREATE USER tester WITH ENCRYPTED PASSWORD 'testmdp';
+
+        postgres=# GRANT ALL PRIVILEGES ON DATABASE testdb TO tester;
+
+        postgres=# \q
+            ==> permet de quitter
+
+    On va maintenant aller dans la db en tant que tester et ajouter une table : 
+
+        $ psql -U tester -d testdb -h localhost
+
+        testdb=> CREATE TABLE test(
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(20) NOT NULL,
+                        num_tel CHAR(10) NULL
+                    );
+    
+        testdb=> \d test
+            ==> permet de voir les details de la table
+
+        testdb=> \q
+            ==> permet de quitter
+
+==== LIENS UTILES ====
+    Une doc libpqxx sympa : https://www.tutorialspoint.com/postgresql/postgresql_c_cpp.htm

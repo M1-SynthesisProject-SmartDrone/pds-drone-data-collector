@@ -1,0 +1,18 @@
+==== NOTES ====
+
+
+
+battery status =-1 si autopilot ou pas de batterie 
+
+==== INFO A RECUP INTERESSANTES ====
+- Battery_status : structure{ mavlink_battery_status_t } toutes les infos de la batterie | ID: MAVLINK_MSG_ID_BATTERY_STATUS
+
+- altitude:structure { mavlink_altitude_t } | ID : MAVLINK_MSG_ID_ALTITUDE
+
+- GPS : à trouver ID:??? MAVLINK_MSG_ID_GLOBAL_POSITION_INT ???
+
+- accélérometres + Gyro + Température: structure { mavlink_highres_imu_t }   |ID: MAVLINK_MSG_ID_HIGHRES_IMU
+
+==== LIENS UTILES ====
+
+ID des messages mavlink : https://mavlink.io/en/messages/common.html 
