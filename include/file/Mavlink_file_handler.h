@@ -9,21 +9,26 @@
 #include <math.h>
 #include <sys/time.h>
 #include <fstream> 
+#include <filesystem>
+
 
 class MavlinkFileHandler
-{
-private:
+{    
 
+private:
     std::ofstream mavlink_altitude_file ;
     std::ofstream mavlink_highres_imu_file ;
     std::ofstream mavlink_battery_status_file ;
-
+    char* folderPath;
 
 
 
 public:
 
-    MavlinkFileHandler(char* altitude_filepath, char* highres_imu_filepath, char* battery_status_filepath);
+    MavlinkFileHandler(char* folderPath);
+    void altitudeFilePathWrite(mavlink_altitude_t altitude);
+    void highresImuFilePathWrite(mavlink_highres_imu_t highres_imu);
+    void batteryStatusFilepathWrite(mavlink_battery_status_t battery_status);
 
 
 };

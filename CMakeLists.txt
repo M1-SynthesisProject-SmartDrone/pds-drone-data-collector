@@ -118,6 +118,10 @@ add_executable(
     # Misc
     include/global_variables.h
 
+    #File
+    include/file/Mavlink_file_handler.h
+    src/file/Mavlink_file_handler.cpp
+
     # Drone
     include/drone/Data_Drone.h
     src/drone/Data_Drone.cpp
