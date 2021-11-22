@@ -9,7 +9,7 @@
 #include "../../include/global_variables.h"
 #include "../../include/threads/DroneReceiver_ThreadClass.h"
 #include <stdio.h>
-
+#include "../../include/file/Mavlink_file_handler.h"
 
 using namespace std;
 
@@ -32,6 +32,9 @@ void DroneReceiver_ThreadClass::run()
     std::string buffer1="";
     m_drone.get()->init_msg_rate(MAVLINK_MSG_ID_HIGHRES_IMU,0);
 
+    MavlinkFileHandler mavlink_file_handler = MavlinkFileHandler("../../../data/"); 
+
+
     while(isRunFlag()) {
         usleep(task_period);
 
@@ -48,6 +51,7 @@ void DroneReceiver_ThreadClass::run()
 			    mavlink_msg_altitude_decode(&mavlinkMessage, &altitude);
 			    printf("altitude_local  %f altitude_relative %f altitude_terrain %f  bottom_clearance %f\n",altitude.altitude_local , altitude.altitude_relative, altitude.altitude_terrain,altitude.bottom_clearance );  
             
+                mavlink_file_handler.write_mavlink_altitude_file(altitude);
                 break;
             case MAVLINK_MSG_ID_COMMAND_ACK:
                 mavlink_msg_command_ack_decode(&mavlinkMessage, &m_drone.get()->ack);
@@ -97,12 +101,16 @@ void DroneReceiver_ThreadClass::run()
                 buffer1 = buffer1+" Temperature: " + std::to_string(highres_imu.temperature)+"\n\n";
                 cout<<buffer1<<endl;
 
+                mavlink_file_handler.write_mavlink_highres_imu_file(highres_imu);
+
                 break;
 
             case MAVLINK_MSG_ID_BATTERY_STATUS:
                 mavlink_battery_status_t battery_status;
                 mavlink_msg_battery_status_decode(&mavlinkMessage, &battery_status);
                 printf("Battery status : %d% \n",battery_status.battery_remaining);
+
+                mavlink_file_handler.write_mavlink_battery_status_file(battery_status);
                 break;
             default:
                 break;

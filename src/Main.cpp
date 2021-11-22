@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     // In a shared pointer because the final app will share this instance
     // it will be easier to refactor code
     shared_ptr<Drone> drone(new Drone());
-    char *serialPath = "/dev/ttyUSB0";
+    char *serialPath = "/dev/ttyACM0";
     int serialBaudrate = 57600;
 
     try

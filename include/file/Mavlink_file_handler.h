@@ -1,10 +1,10 @@
 /**
  * file_handle for read a file and write on it 
+ * @author Enzo Kalinowski
  */
 #include "../../lib/mavlink/common/mavlink.h"
 #include <iostream>
-#include <string>
-#include <iostream>
+#include <string.h>
 #include <unistd.h>
 #include <math.h>
 #include <sys/time.h>
@@ -16,19 +16,19 @@ class MavlinkFileHandler
 {    
 
 private:
-    std::ofstream mavlink_altitude_file ;
-    std::ofstream mavlink_highres_imu_file ;
-    std::ofstream mavlink_battery_status_file ;
-    char* folderPath;
+    std::fstream mavlink_altitude_fileStream ;
+    std::fstream mavlink_highres_imu_fileStream ;
+    std::fstream mavlink_battery_status_fileStream ;
 
+    std::string folderPath;
 
+    char separator;
 
 public:
 
-    MavlinkFileHandler(char* folderPath);
-    void altitudeFilePathWrite(mavlink_altitude_t altitude);
-    void highresImuFilePathWrite(mavlink_highres_imu_t highres_imu);
-    void batteryStatusFilepathWrite(mavlink_battery_status_t battery_status);
-
-
+    MavlinkFileHandler(std::string folderPath);
+    void write_mavlink_altitude_file(mavlink_altitude_t altitude);
+    void write_mavlink_highres_imu_file(mavlink_highres_imu_t highres_imu);
+    void write_mavlink_battery_status_file(mavlink_battery_status_t battery_status);
+    
 };

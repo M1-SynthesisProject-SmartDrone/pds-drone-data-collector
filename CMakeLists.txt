@@ -118,7 +118,7 @@ add_executable(
     # Misc
     include/global_variables.h
 
-    #File
+    # File
     include/file/Mavlink_file_handler.h
     src/file/Mavlink_file_handler.cpp
 
