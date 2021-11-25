@@ -32,7 +32,7 @@ void DroneReceiver_ThreadClass::run()
     std::string buffer1="";
     m_drone.get()->init_msg_rate(MAVLINK_MSG_ID_HIGHRES_IMU,0);
 
-    MavlinkFileHandler mavlink_file_handler = MavlinkFileHandler("../../../data/"); 
+    MavlinkFileHandler mavlink_file_handler = MavlinkFileHandler("/home/enzo/Bureau/TMPTEST"); 
 
 
     while(isRunFlag()) {
