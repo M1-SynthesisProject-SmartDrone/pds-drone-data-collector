@@ -29,7 +29,7 @@ void DroneReceiver_ThreadClass::run()
     loguru::set_thread_name("drone receiver");
     LOG_F(INFO, "Start Drone receiver thread class");
     std::string buffer1="";
-    m_drone.get()->init_msg_rate(MAVLINK_MSG_ID_HIGHRES_IMU,0);
+    // m_drone->init_msg_rate(MAVLINK_MSG_ID_HIGHRES_IMU,0);
 
     MavlinkFileHandler mavlink_file_handler = MavlinkFileHandler("/home/enzo/Bureau/TMPTEST"); 
 
