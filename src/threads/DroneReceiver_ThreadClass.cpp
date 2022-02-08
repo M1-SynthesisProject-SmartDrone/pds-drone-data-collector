@@ -3,13 +3,12 @@
  * @author Aldric Vitali Silvestre
  */
 
-#include "../../lib/loguru/loguru.hpp"
-#include "../../lib/mavlink/common/mavlink.h"
+#include "loguru/loguru.hpp"
+#include "mavlink/common/mavlink.h"
 
-#include "../../include/global_variables.h"
-#include "../../include/threads/DroneReceiver_ThreadClass.h"
+#include "threads/DroneReceiver_ThreadClass.h"
 #include <stdio.h>
-#include "../../include/file/Mavlink_file_handler.h"
+#include "file/Mavlink_file_handler.h"
 
 using namespace std;
 

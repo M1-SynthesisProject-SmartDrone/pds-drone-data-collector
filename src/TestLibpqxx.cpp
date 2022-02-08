@@ -28,41 +28,41 @@ void insertRandomRow(pqxx::connection &connection);
 void displayAllRows(pqxx::connection &connection);
 void displayAllRowsStream(pqxx::connection &connection);
 
-int main(int argc, char *argv[])
-{
-    loguru::init(argc, argv);
-    LOG_F(INFO, "Start TestLibpqxx app");
+// int main(int argc, char *argv[])
+// {
+//     loguru::init(argc, argv);
+//     LOG_F(INFO, "Start TestLibpqxx app");
 
-    std::stringstream connectionStringStream;
-    connectionStringStream << "user=" << DB_USER << " password=" << DB_PASSWORD << " dbname=" << DB_DATABASE_NAME << " hostaddr=" << DB_HOST << " port=" << DB_PORT;
+//     std::stringstream connectionStringStream;
+//     connectionStringStream << "user=" << DB_USER << " password=" << DB_PASSWORD << " dbname=" << DB_DATABASE_NAME << " hostaddr=" << DB_HOST << " port=" << DB_PORT;
 
-    LOG_F(INFO, "Connect with user \"%s\" in database \"%s\"", DB_USER, DB_DATABASE_NAME);
+//     LOG_F(INFO, "Connect with user \"%s\" in database \"%s\"", DB_USER, DB_DATABASE_NAME);
 
-    try
-    {
-        // Create the connection
-        pqxx::connection connection(connectionStringStream.str());
-        if (connection.is_open())
-        {
-            LOG_F(INFO, "Connected to database");
-        }
-        else
-        {
-            LOG_F(ERROR, "Cannot open database");
-            return EXIT_FAILURE;
-        }
+//     try
+//     {
+//         // Create the connection
+//         pqxx::connection connection(connectionStringStream.str());
+//         if (connection.is_open())
+//         {
+//             LOG_F(INFO, "Connected to database");
+//         }
+//         else
+//         {
+//             LOG_F(ERROR, "Cannot open database");
+//             return EXIT_FAILURE;
+//         }
 
-        insertRandomRow(connection);
-        displayAllRows(connection);
-    }
-    catch (std::exception &exception)
-    {
-        LOG_F(ERROR, "Error with database : %s", exception.what());
-        return EXIT_FAILURE;
-    }
+//         insertRandomRow(connection);
+//         displayAllRows(connection);
+//     }
+//     catch (std::exception &exception)
+//     {
+//         LOG_F(ERROR, "Error with database : %s", exception.what());
+//         return EXIT_FAILURE;
+//     }
 
-    return EXIT_SUCCESS;
-}
+//     return EXIT_SUCCESS;
+// }
 
 void insertRandomRow(pqxx::connection &connection)
 {

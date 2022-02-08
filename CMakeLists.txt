@@ -16,6 +16,8 @@ project(DroneCollector CXX)
 cmake_minimum_required(VERSION 3.2)
 set(VERSION 1.0.0)
 
+set(APP_NAME DroneCollector)
+
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
@@ -51,25 +53,6 @@ else()
     message(FATAL_ERROR "Fail : you must install libpqxx")
 endif()
 
-message("- Checking : mavlink")
-if(EXISTS ${CMAKE_SOURCE_DIR}/lib/mavlink)
-    message("-> succes " )
-else()
-    message("Fail: You must install mavlink")
-endif()
-set(MAVLINK_LIB -I/lib/mavlink)
-include_directories(./lib/mavlink)
-
-
-message("- Checking : Loguru")
-if(EXISTS ${CMAKE_SOURCE_DIR}/lib/loguru)
-   message("-> succes " )
-else()
-   message("Fail: You must add loguru log system in lib folder")
-endif()
-set(LOGURU_LIB -I/lib/loguru)
-include_directories(./lib/loguru)
-
 message("- Checking : Blc channels")
 find_package(blc_channel REQUIRED)
 find_package(blc_program REQUIRED)
@@ -91,15 +74,17 @@ find_package(Threads)
 
 link_libraries(
     ${BL_LIBRARIES} 
-    ${MAVLINK_LIB}
-    ${LOGURU_LIB}
+    # ${MAVLINK_LIB}
+    # ${LOGURU_LIB}
     # ${CURSES_LIBRARIES}
     # ${CMAKE_THREAD_LIBS_INIT}
     dl
     panel
 )
 
-
+add_subdirectory(lib)
+include_directories(lib)
+include_directories(include)
 
 ######################################################################################################
 ###                                         APPLICATION                                             ##
@@ -107,41 +92,15 @@ link_libraries(
 
 message("\n%% APPLICATION GENERATION")
 
-# %% App files
-add_executable(
-    DroneCollector
-
-    # libraries to compile
-    lib/loguru/loguru.cpp
-    lib/loguru/loguru.hpp
-
-    # Misc
-    include/global_variables.h
-
-    # File
-    include/file/Mavlink_file_handler.h
-    src/file/Mavlink_file_handler.cpp
-
-    # Drone
-    include/drone/Data_Drone.h
-    src/drone/Data_Drone.cpp
-
-    # Network
-    include/network/Com_Serial.h
-    include/network/Com_Wifi.h
-    src/network/Com_Serial.cpp
-
-    # Threads
-    include/threads/Abstract_ThreadClass.h
-    include/threads/Database_ThreadClass.h
-    include/threads/DroneReceiver_ThreadClass.h
-    src/threads/Abstract_ThreadClass.cpp
-    src/threads/Database_ThreadClass.cpp
-    src/threads/DroneReceiver_ThreadClass.cpp
-
-    # entry point
-    src/Main.cpp
+file(GLOB_RECURSE drone_SRC 
+    "lib/*.h"
+    "include/*.h"
+     "src/*.cpp"
 )
+list(REMOVE_ITEM ${drone_SRC} "src/TestLibpqxx.cpp")
+
+# %% App files
+add_executable(${APP_NAME} ${drone_SRC})
 
 # The libpqxx test app
 # add_executable(
@@ -155,5 +114,8 @@ add_executable(
 #     src/TestLibpqxx.cpp
 # )
 
-target_link_libraries(DroneCollector -lpqxx -lpq)
-# target_link_libraries(TestLibpqxx -lpqxx -lpq)
+target_link_libraries(${APP_NAME} PUBLIC
+    cxxopts 
+    mavlink
+    loguru
+    -lpqxx -lpq)
